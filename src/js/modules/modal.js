@@ -7,6 +7,8 @@ const parentModalWindow = document.querySelector(modalSelectorItem);
 let timer = null;
 
 openModalScroll();
+openModalTimer();
+
 
 buttonsPopup.forEach((elem) => {
     elem.addEventListener("click", (event) => {
@@ -41,6 +43,7 @@ function openModalScroll() {
             clearTimeout(timer);
         }
     });
+}
 
 function openModalTimer(){
     timer = setTimeout(() => {
@@ -49,13 +52,6 @@ function openModalTimer(){
         }
     }, timerNumber);
 }
-
-openModalTimer();
-
-}
-
-
-
 
 }//modalWindow
 
