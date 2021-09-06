@@ -15598,12 +15598,14 @@ function tabs(_ref) {
       targetActiveClass = _ref.targetActiveClass;
   var blocks = document.querySelectorAll(blockSelector);
   var content = document.querySelectorAll(contentSelector);
+  setActiveClass(targetActiveClass);
+  toggleContent(content);
   blocks.forEach(function (elem, i) {
     elem.addEventListener("click", function (event) {
-      if (event.target.matches("a") || event.target.matches("img")) {
+      if (event.target.matches("a") || event.target.matches("img") || event.target.matches("div")) {
         event.preventDefault();
         setActiveClass(targetActiveClass, i);
-        toggleContent(i);
+        toggleContent(content, i);
         clientOreder["Выбор рамы"] = blocks[i].innerText.replace(/\n/gi, " ");
       }
     });
@@ -15617,12 +15619,12 @@ function tabs(_ref) {
     array[i].classList.add(classActiveSelector);
   }
 
-  function toggleContent() {
-    var i = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
-    content.forEach(function (e) {
+  function toggleContent(array) {
+    var i = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+    array.forEach(function (e) {
       e.style.display = "none";
     });
-    content[i].style.display = "block";
+    array[i].style.display = "block";
   }
 } //tabs
 

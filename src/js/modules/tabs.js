@@ -7,12 +7,15 @@ export function tabs({blockSelector, contentSelector, classActiveSelector, targe
 const blocks = document.querySelectorAll(blockSelector);
 const content = document.querySelectorAll(contentSelector);
 
+setActiveClass(targetActiveClass);
+toggleContent(content);
+
     blocks.forEach((elem, i) => {
         elem.addEventListener("click", (event) => {
-            if (event.target.matches("a") || event.target.matches("img")) {
+            if (event.target.matches("a") || event.target.matches("img") || event.target.matches("div")) {
                 event.preventDefault();
                 setActiveClass(targetActiveClass, i);
-                toggleContent(i);
+                toggleContent(content, i);
                 clientOreder["Выбор рамы"] = ( blocks[i].innerText.replace(/\n/gi, " ") );
             }
         });
@@ -25,11 +28,11 @@ const content = document.querySelectorAll(contentSelector);
         array[i].classList.add(classActiveSelector);
     } 
 
-    function toggleContent(i = 0) {
-        content.forEach((e) => {
+    function toggleContent(array, i = 0) {
+        array.forEach((e) => {
             e.style.display = "none";
         });
-        content[i].style.display = "block";
+        array[i].style.display = "block";
     }
 
 }//tabs
