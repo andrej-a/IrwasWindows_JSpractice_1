@@ -1,4 +1,7 @@
 "use strict";
+
+import {closeModal} from "../service/service";
+
 export function modalWindow({buttonOpenSelectorItem, modalSelectorItem, buttonCloseSelectorItem, timerNumber}) {
 
 const buttonsPopup = document.querySelectorAll(buttonOpenSelectorItem);
@@ -29,11 +32,6 @@ function openModal(element) {
     document.body.style.overflow = "hidden";
     element.style.display = "block";
     element.classList.add("opened");
-}
-
-function closeModal(element) {
-    document.body.style.overflow = "";
-    element.style.display = "none";
 }
 
 function openModalScroll() {
