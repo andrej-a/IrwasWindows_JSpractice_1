@@ -1,6 +1,6 @@
 "use strict";
 
-import {closeModal} from "../service/service";
+import {closeModal, openModal} from "../service/service";
 
 export function modalWindow({buttonOpenSelectorItem, modalSelectorItem, buttonCloseSelectorItem, timerNumber}) {
 
@@ -26,13 +26,6 @@ parentModalWindow.addEventListener("click", (e) => {
         closeModal(modalWindow);
     }
 });
-
-
-function openModal(element) {
-    document.body.style.overflow = "hidden";
-    element.style.display = "block";
-    element.classList.add("opened");
-}
 
 function openModalScroll() {
     document.addEventListener("scroll", () => {

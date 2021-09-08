@@ -17,3 +17,10 @@ export function closeModal(element) {
     document.body.style.overflow = "";
     element.style.display = "none";
 }
+
+
+export function openModal(element) {
+    document.body.style.overflow = "hidden";
+    element.style.display = "block";
+    element.classList.add("opened");
+}

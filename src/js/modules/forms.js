@@ -37,7 +37,7 @@ export function forms(formSelector, formInputSelector) {
 
             const json = JSON.stringify( Object.fromEntries( formData.entries() ) );
 
-            postDataFormToServer("http://localhost:3000/orders", json, box, message.waiting)
+            postDataFormToServer("http://localhost:3000/callingMaster", json, box, message.waiting)
             .then(result => {
                 console.log(result);
                 box.innerText = `${result.user_name}, спасибо! ${message.done}` ;

@@ -1,7 +1,4 @@
 "use strict";
-const clientOreder = {
-    "Выбор рамы": null,
-};
 
 export function tabs({blockSelector, contentSelector, classActiveSelector, targetActiveClass}) {
 const blocks = document.querySelectorAll(blockSelector);
@@ -16,7 +13,6 @@ toggleContent(content);
                 event.preventDefault();
                 setActiveClass(targetActiveClass, i);
                 toggleContent(content, i);
-                clientOreder["Выбор рамы"] = ( blocks[i].innerText.replace(/\n/gi, " ") );
             }
         });
     });

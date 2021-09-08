@@ -2,7 +2,7 @@ import "./slider";
 import {modalWindow} from "./modules/modal";
 import {tabs} from "./modules/tabs";
 import {forms} from "./modules/forms";
-
+import {calculate} from "./modules/calculate";
 
 window.addEventListener("DOMContentLoaded", () => {
     
@@ -43,5 +43,8 @@ window.addEventListener("DOMContentLoaded", () => {
 
 
     forms(".form", ".form_input");
+
+
+    calculate();
 
 }); //window
