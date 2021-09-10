@@ -1,14 +1,12 @@
 "use strict";
 import {postDataFormToServer, closeModal} from "../service/service";
-
-export function forms(formSelector, formInputSelector) {
-
-    const message = {
+export const message = {
         done: "Ваша заявка отправлена! Мы обязательно перезвоним вам.",
         waiting: "Запрос отправляется...",
         error: "Произошла ошибка. Пожалуйста, попробуйте снова."
     };
-
+    
+export function forms(formSelector, formInputSelector) {
     const formsArray = document.querySelectorAll(formSelector);
     const inputsArray = document.querySelectorAll(formInputSelector);
     formsArray.forEach((elem) => {

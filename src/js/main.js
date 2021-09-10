@@ -42,7 +42,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
 
 
-    forms(".form", ".form_input");
+    forms(".formEngineer", ".form_input");
 
 
     calculate();

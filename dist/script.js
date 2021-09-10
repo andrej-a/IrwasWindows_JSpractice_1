@@ -18542,7 +18542,7 @@ window.addEventListener("DOMContentLoaded", function () {
     classActiveSelector: "after_click",
     targetActiveClass: document.querySelectorAll(".no_click")
   });
-  Object(_modules_forms__WEBPACK_IMPORTED_MODULE_3__["forms"])(".form", ".form_input");
+  Object(_modules_forms__WEBPACK_IMPORTED_MODULE_3__["forms"])(".formEngineer", ".form_input");
   Object(_modules_calculate__WEBPACK_IMPORTED_MODULE_4__["calculate"])();
 }); //window
 
@@ -18558,11 +18558,22 @@ window.addEventListener("DOMContentLoaded", function () {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "calculate", function() { return calculate; });
-/* harmony import */ var core_js_modules_es_string_replace__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! core-js/modules/es.string.replace */ "./node_modules/core-js/modules/es.string.replace.js");
-/* harmony import */ var core_js_modules_es_string_replace__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_string_replace__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! core-js/modules/web.dom-collections.for-each */ "./node_modules/core-js/modules/web.dom-collections.for-each.js");
-/* harmony import */ var core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _service_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../service/service */ "./src/js/service/service.js");
+/* harmony import */ var core_js_modules_es_object_to_string__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! core-js/modules/es.object.to-string */ "./node_modules/core-js/modules/es.object.to-string.js");
+/* harmony import */ var core_js_modules_es_object_to_string__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_object_to_string__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var core_js_modules_es_promise__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! core-js/modules/es.promise */ "./node_modules/core-js/modules/es.promise.js");
+/* harmony import */ var core_js_modules_es_promise__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_promise__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var core_js_modules_es_promise_finally__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! core-js/modules/es.promise.finally */ "./node_modules/core-js/modules/es.promise.finally.js");
+/* harmony import */ var core_js_modules_es_promise_finally__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_promise_finally__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var core_js_modules_es_string_replace__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! core-js/modules/es.string.replace */ "./node_modules/core-js/modules/es.string.replace.js");
+/* harmony import */ var core_js_modules_es_string_replace__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_string_replace__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! core-js/modules/web.dom-collections.for-each */ "./node_modules/core-js/modules/web.dom-collections.for-each.js");
+/* harmony import */ var core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _service_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../service/service */ "./src/js/service/service.js");
+/* harmony import */ var _forms__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./forms */ "./src/js/modules/forms.js");
+
+
+
+
 
 
 
@@ -18578,29 +18589,77 @@ function calculate() {
   var popupCalcButton = document.querySelector(".popup_calc_button");
   var popupCalcProfile = document.querySelector(".popup_calc_profile");
   var selectProfile = popupCalcProfile.querySelector("select");
+  var checkboxes = popupCalcProfile.querySelectorAll("label > input");
+  var popupCalcProfileButton = popupCalcProfile.querySelector(".popup_calc_profile_button");
+  var popupCalcEnd = document.querySelector(".popup_calc_end");
+  var form = popupCalcEnd.querySelector(".formOreder");
   closeModalWithDelegir(popupCalc, ".popup_calc", ".popup_calc_close strong");
   closeModalWithDelegir(popupCalcProfile, ".popup_calc_profile", ".popup_calc_profile_close strong");
+  closeModalWithDelegir(popupCalcEnd, ".popup_calc_end", ".popup_calc_end_close strong");
   btnPrice.forEach(function (btn) {
+    //1
     btn.addEventListener("click", function () {
-      Object(_service_service__WEBPACK_IMPORTED_MODULE_2__["openModal"])(popupCalc);
+      Object(_service_service__WEBPACK_IMPORTED_MODULE_5__["openModal"])(popupCalc);
       toggleIcons(icons, bigIMG);
+      inputs.forEach(function (input) {
+        input.addEventListener("input", function () {
+          input.value = input.value.replace(/\D/g, "");
+        });
+      });
     });
   });
   popupCalcButton.addEventListener("click", function () {
-    getSize(inputs); //inputs.forEach(input => input.value = "");
+    //2
+    getSize(inputs);
+    checkboxes[0].defaultChecked = true;
+    clientOreder['Вид остекления'] = checkboxes[0].parentElement.innerText.replace(/\s/g, "");
+    getChecboxes(); //inputs.forEach(input => input.value = "");
 
-    console.log(clientOreder);
-    Object(_service_service__WEBPACK_IMPORTED_MODULE_2__["closeModal"])(popupCalc);
-    Object(_service_service__WEBPACK_IMPORTED_MODULE_2__["openModal"])(popupCalcProfile);
-    console.log(selectProfile.options[selectProfile.selectedIndex].text);
+    Object(_service_service__WEBPACK_IMPORTED_MODULE_5__["closeModal"])(popupCalc);
+    popupCalc.classList.add("closed");
+    Object(_service_service__WEBPACK_IMPORTED_MODULE_5__["openModal"])(popupCalcProfile);
+  });
+  popupCalcProfileButton.addEventListener("click", function () {
+    //3
+    clientOreder['Остекление'] = selectProfile.options[selectProfile.selectedIndex].text;
+    Object(_service_service__WEBPACK_IMPORTED_MODULE_5__["closeModal"])(popupCalcProfile);
+    Object(_service_service__WEBPACK_IMPORTED_MODULE_5__["openModal"])(popupCalcEnd);
+  });
+  form.addEventListener("submit", function (event) {
+    event.preventDefault();
+    clientOreder['Имя'] = popupCalcEnd.querySelectorAll("input")[0].value;
+    clientOreder['Номер телефона'] = popupCalcEnd.querySelectorAll("input")[1].value;
+    document.body.style.overflow = "hidden";
+    var box = document.createElement("div");
+    box.classList.add("status");
+    form.appendChild(box);
+    var json = JSON.stringify(clientOreder);
+    Object(_service_service__WEBPACK_IMPORTED_MODULE_5__["postDataFormToServer"])("http://localhost:3000/orders", json, box, _forms__WEBPACK_IMPORTED_MODULE_6__["message"].waiting).then(function (result) {
+      console.log(result);
+      box.innerText = _forms__WEBPACK_IMPORTED_MODULE_6__["message"].done;
+    }).catch(function () {
+      box.innerText = _forms__WEBPACK_IMPORTED_MODULE_6__["message"].error;
+    }).finally(function () {
+      setTimeout(function () {
+        document.body.style.overflow = "";
+        form.removeChild(box);
+        form.reset();
+        Object(_service_service__WEBPACK_IMPORTED_MODULE_5__["closeModal"])(popupCalcEnd);
+      }, 3000);
+    });
   });
 
-  function getSize(array) {
-    array.forEach(function (input) {
-      input.addEventListener("input", function () {
-        input.value = input.value.replace(/\D/g, "");
+  function getChecboxes() {
+    popupCalcProfile.addEventListener("change", function (e) {
+      checkboxes.forEach(function (ch) {
+        ch.checked = false;
       });
+      e.target.checked = true;
+      clientOreder['Вид остекления'] = e.target.parentElement.innerText;
     });
+  }
+
+  function getSize(array) {
     clientOreder['Квадратных метров всего:'] = +array[0].value / 1000 * (+array[1].value / 1000);
   }
 
@@ -18630,7 +18689,7 @@ function calculate() {
   function closeModalWithDelegir(modalWindow, parentSelector, childSelector) {
     modalWindow.addEventListener("click", function (e) {
       if (e.target.matches(parentSelector) || e.target.matches(childSelector)) {
-        Object(_service_service__WEBPACK_IMPORTED_MODULE_2__["closeModal"])(modalWindow);
+        Object(_service_service__WEBPACK_IMPORTED_MODULE_5__["closeModal"])(modalWindow);
         modalWindow.classList.remove("opened");
         modalWindow.classList.add("closed");
       }
@@ -18644,11 +18703,12 @@ function calculate() {
 /*!*********************************!*\
   !*** ./src/js/modules/forms.js ***!
   \*********************************/
-/*! exports provided: forms */
+/*! exports provided: message, forms */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "message", function() { return message; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "forms", function() { return forms; });
 /* harmony import */ var core_js_modules_es_array_concat__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! core-js/modules/es.array.concat */ "./node_modules/core-js/modules/es.array.concat.js");
 /* harmony import */ var core_js_modules_es_array_concat__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_array_concat__WEBPACK_IMPORTED_MODULE_0__);
@@ -18684,12 +18744,12 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+var message = {
+  done: "Ваша заявка отправлена! Мы обязательно перезвоним вам.",
+  waiting: "Запрос отправляется...",
+  error: "Произошла ошибка. Пожалуйста, попробуйте снова."
+};
 function forms(formSelector, formInputSelector) {
-  var message = {
-    done: "Ваша заявка отправлена! Мы обязательно перезвоним вам.",
-    waiting: "Запрос отправляется...",
-    error: "Произошла ошибка. Пожалуйста, попробуйте снова."
-  };
   var formsArray = document.querySelectorAll(formSelector);
   var inputsArray = document.querySelectorAll(formInputSelector);
   formsArray.forEach(function (elem) {
