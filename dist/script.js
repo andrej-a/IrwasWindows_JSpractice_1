@@ -18580,22 +18580,29 @@ __webpack_require__.r(__webpack_exports__);
 
 
 function calculate() {
-  var clientOreder = {};
-  var btnPrice = document.querySelectorAll(".glazing_price_btn");
-  var popupCalc = document.querySelector(".popup_calc");
+  var clientOreder = {}; //object to server
+
+  var btnPrice = document.querySelectorAll(".glazing_price_btn"); //all buttons in tabsContent
+
+  var popupCalc = document.querySelector(".popup_calc"); //first modal window parent
+
   var inputs = popupCalc.querySelectorAll("input");
   var icons = popupCalc.querySelectorAll(".balcon_icons_img");
   var bigIMG = popupCalc.querySelectorAll(".big_img img");
-  var popupCalcButton = document.querySelector(".popup_calc_button");
-  var popupCalcProfile = document.querySelector(".popup_calc_profile");
+  var popupCalcButton = document.querySelector(".popup_calc_button"); //button "next"
+
+  var popupCalcProfile = document.querySelector(".popup_calc_profile"); //second modal window parent
+
   var selectProfile = popupCalcProfile.querySelector("select");
   var checkboxes = popupCalcProfile.querySelectorAll("label > input");
-  var popupCalcProfileButton = popupCalcProfile.querySelector(".popup_calc_profile_button");
-  var popupCalcEnd = document.querySelector(".popup_calc_end");
+  var popupCalcProfileButton = popupCalcProfile.querySelector(".popup_calc_profile_button"); //button "next"
+
+  var popupCalcEnd = document.querySelector(".popup_calc_end"); //thirth modal window parent (form)
+
   var form = popupCalcEnd.querySelector(".formOreder");
-  closeModalWithDelegir(popupCalc, ".popup_calc", ".popup_calc_close strong");
-  closeModalWithDelegir(popupCalcProfile, ".popup_calc_profile", ".popup_calc_profile_close strong");
-  closeModalWithDelegir(popupCalcEnd, ".popup_calc_end", ".popup_calc_end_close strong");
+  closeModalWithDelegir(popupCalc, ".popup_calc_close strong");
+  closeModalWithDelegir(popupCalcProfile, ".popup_calc_profile_close strong");
+  closeModalWithDelegir(popupCalcEnd, ".popup_calc_end_close strong");
   btnPrice.forEach(function (btn) {
     //1
     btn.addEventListener("click", function () {
@@ -18603,25 +18610,36 @@ function calculate() {
       toggleIcons(icons, bigIMG);
       inputs.forEach(function (input) {
         input.addEventListener("input", function () {
-          input.value = input.value.replace(/\D/g, "");
+          input.value = input.value.replace(/\D/g, ""); //nothing except digits
         });
       });
     });
   });
   popupCalcButton.addEventListener("click", function () {
     //2
-    getSize(inputs);
-    checkboxes[0].defaultChecked = true;
-    clientOreder['Вид остекления'] = checkboxes[0].parentElement.innerText.replace(/\s/g, "");
-    getChecboxes(); //inputs.forEach(input => input.value = "");
+    if (inputs[0].value.length === 0 || inputs[1].value.length === 0) {
+      var box = document.createElement("div");
+      box.classList.add("status");
+      box.innerText = "Пожалуйста, введите значения ширины и высоты.";
+      document.querySelector(".popup_calc_content").appendChild(box);
+      setTimeout(function () {
+        document.querySelector(".popup_calc_content").removeChild(box);
+      }, 3000);
+    } else {
+      getSize(inputs);
+      checkboxes[0].defaultChecked = true;
+      clientOreder['Вид остекления'] = checkboxes[0].parentElement.innerText.replace(/\s/g, "");
+      getChecboxes(); //inputs.forEach(input => input.value = "");
 
-    Object(_service_service__WEBPACK_IMPORTED_MODULE_5__["closeModal"])(popupCalc);
-    popupCalc.classList.add("closed");
-    Object(_service_service__WEBPACK_IMPORTED_MODULE_5__["openModal"])(popupCalcProfile);
+      Object(_service_service__WEBPACK_IMPORTED_MODULE_5__["closeModal"])(popupCalc);
+      popupCalc.classList.add("closed");
+      Object(_service_service__WEBPACK_IMPORTED_MODULE_5__["openModal"])(popupCalcProfile);
+    }
   });
   popupCalcProfileButton.addEventListener("click", function () {
     //3
-    clientOreder['Остекление'] = selectProfile.options[selectProfile.selectedIndex].text;
+    clientOreder['Остекление'] = selectProfile.options[selectProfile.selectedIndex].text; //get value from select
+
     Object(_service_service__WEBPACK_IMPORTED_MODULE_5__["closeModal"])(popupCalcProfile);
     Object(_service_service__WEBPACK_IMPORTED_MODULE_5__["openModal"])(popupCalcEnd);
   });
@@ -18665,9 +18683,9 @@ function calculate() {
 
   function toggleIcons(arrayIcon, arrayBigIMG) {
     if (!popupCalc.classList.contains("closed")) {
-      arrayBigIMG[0].style.display = "block";
-      arrayBigIMG[0].style.marginLeft = "80px";
+      arrayBigIMG[0].style.display = "inline";
       arrayIcon[0].classList.add("do_image_more");
+      clientOreder['Тип окна'] = arrayIcon[0].firstElementChild.alt;
     }
 
     arrayIcon.forEach(function (icon, i) {
@@ -18677,18 +18695,18 @@ function calculate() {
           e.classList.remove("do_image_more");
         });
         arrayIcon[i].classList.add("do_image_more");
+        clientOreder['Тип окна'] = arrayIcon[i].firstElementChild.alt;
         arrayBigIMG.forEach(function (big) {
           big.style.display = "none";
-          big.style.marginLeft = "80px";
         });
-        arrayBigIMG[i].style.display = "block";
+        arrayBigIMG[i].style.display = "inline";
       });
     });
   }
 
-  function closeModalWithDelegir(modalWindow, parentSelector, childSelector) {
+  function closeModalWithDelegir(modalWindow, childSelector) {
     modalWindow.addEventListener("click", function (e) {
-      if (e.target.matches(parentSelector) || e.target.matches(childSelector)) {
+      if (e.target.matches(childSelector)) {
         Object(_service_service__WEBPACK_IMPORTED_MODULE_5__["closeModal"])(modalWindow);
         modalWindow.classList.remove("opened");
         modalWindow.classList.add("closed");
