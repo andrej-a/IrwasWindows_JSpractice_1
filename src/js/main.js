@@ -3,6 +3,8 @@ import {modalWindow} from "./modules/modal";
 import {tabs} from "./modules/tabs";
 import {forms} from "./modules/forms";
 import {calculate} from "./modules/calculate";
+import {timer} from "./modules/timer";
+import {images} from "./modules/images";
 
 window.addEventListener("DOMContentLoaded", () => {
     
@@ -24,8 +26,6 @@ window.addEventListener("DOMContentLoaded", () => {
         }
     );
 
-
-
     tabs({
         blockSelector: ".glazing_block",
         contentSelector: ".glazing_content",
@@ -40,11 +40,11 @@ window.addEventListener("DOMContentLoaded", () => {
         targetActiveClass: document.querySelectorAll(".no_click"),
     });
 
-
-
     forms(".formEngineer", ".form_input");
-
 
     calculate();
 
+    timer("2021-09-13T20:57", "#timer");
+
+    images(".works", "faded", "preview", "popup");
 }); //window

@@ -18511,6 +18511,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_tabs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./modules/tabs */ "./src/js/modules/tabs.js");
 /* harmony import */ var _modules_forms__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modules/forms */ "./src/js/modules/forms.js");
 /* harmony import */ var _modules_calculate__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./modules/calculate */ "./src/js/modules/calculate.js");
+/* harmony import */ var _modules_timer__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./modules/timer */ "./src/js/modules/timer.js");
+/* harmony import */ var _modules_images__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./modules/images */ "./src/js/modules/images.js");
+
+
 
 
 
@@ -18544,6 +18548,8 @@ window.addEventListener("DOMContentLoaded", function () {
   });
   Object(_modules_forms__WEBPACK_IMPORTED_MODULE_3__["forms"])(".formEngineer", ".form_input");
   Object(_modules_calculate__WEBPACK_IMPORTED_MODULE_4__["calculate"])();
+  Object(_modules_timer__WEBPACK_IMPORTED_MODULE_5__["timer"])("2021-09-13T20:57", "#timer");
+  Object(_modules_images__WEBPACK_IMPORTED_MODULE_6__["images"])(".works", "faded", "preview", "popup");
 }); //window
 
 /***/ }),
@@ -18819,15 +18825,65 @@ function forms(formSelector, formInputSelector) {
 
 /***/ }),
 
-/***/ "./src/js/modules/modal.js":
-/*!*********************************!*\
-  !*** ./src/js/modules/modal.js ***!
-  \*********************************/
-/*! exports provided: modalWindow */
+/***/ "./src/js/modules/images.js":
+/*!**********************************!*\
+  !*** ./src/js/modules/images.js ***!
+  \**********************************/
+/*! exports provided: images */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "images", function() { return images; });
+/* harmony import */ var _modal__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modal */ "./src/js/modules/modal.js");
+
+
+
+function images(parentSelector, styleAnimation, styleChild, styleWrapper) {
+  var imgPopup = document.createElement("div");
+  imgPopup.style.justifyContent = "center";
+  imgPopup.style.alignItems = "center";
+  imgPopup.style.display = "none";
+  var bigIMG = document.createElement("img");
+  bigIMG.classList.add(styleAnimation);
+  imgPopup.appendChild(bigIMG);
+  var parentIMG = document.querySelector(parentSelector);
+  parentIMG.appendChild(imgPopup);
+  parentIMG.addEventListener("click", function (event) {
+    event.preventDefault();
+
+    if (event.target && event.target.classList.contains(styleChild)) {
+      document.body.style.overflow = "hidden";
+      document.body.style.marginRight = "".concat(Object(_modal__WEBPACK_IMPORTED_MODULE_0__["calcScroll"])(), "px");
+      imgPopup.classList.add(styleWrapper);
+      bigIMG.src = event.target.parentElement.href;
+      bigIMG.style.width = "600px";
+      bigIMG.style.height = "500px";
+      imgPopup.style.display = "flex";
+    }
+
+    if (event.target && event.target.classList.contains(styleWrapper)) {
+      document.body.style.marginRight = "0px";
+      imgPopup.classList.remove(styleWrapper);
+      document.body.style.overflow = "";
+      bigIMG.src = "";
+      imgPopup.style.display = "none";
+    }
+  });
+} //images
+
+/***/ }),
+
+/***/ "./src/js/modules/modal.js":
+/*!*********************************!*\
+  !*** ./src/js/modules/modal.js ***!
+  \*********************************/
+/*! exports provided: calcScroll, modalWindow */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "calcScroll", function() { return calcScroll; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "modalWindow", function() { return modalWindow; });
 /* harmony import */ var core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! core-js/modules/web.dom-collections.for-each */ "./node_modules/core-js/modules/web.dom-collections.for-each.js");
 /* harmony import */ var core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_web_dom_collections_for_each__WEBPACK_IMPORTED_MODULE_0__);
@@ -18836,6 +18892,17 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+function calcScroll() {
+  var div = document.createElement("div");
+  div.style.width = "50px";
+  div.style.height = "50px";
+  div.style.overflowY = "scroll";
+  div.style.visibility = "hidden";
+  document.body.appendChild(div);
+  var scrollWidth = div.offsetWidth - div.clientWidth;
+  document.body.removeChild(div);
+  return scrollWidth;
+}
 function modalWindow(_ref) {
   var buttonOpenSelectorItem = _ref.buttonOpenSelectorItem,
       modalSelectorItem = _ref.modalSelectorItem,
@@ -18932,6 +18999,52 @@ function tabs(_ref) {
 
 /***/ }),
 
+/***/ "./src/js/modules/timer.js":
+/*!*********************************!*\
+  !*** ./src/js/modules/timer.js ***!
+  \*********************************/
+/*! exports provided: timer */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "timer", function() { return timer; });
+/* harmony import */ var core_js_modules_es_array_concat__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! core-js/modules/es.array.concat */ "./node_modules/core-js/modules/es.array.concat.js");
+/* harmony import */ var core_js_modules_es_array_concat__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_array_concat__WEBPACK_IMPORTED_MODULE_0__);
+
+
+
+function timer(deadlineString, selector) {
+  var timerItems = document.querySelector(selector);
+  setTimer(timerItems);
+
+  function getDistanceMS() {
+    var beetwen = new Date(deadlineString) - new Date();
+    return beetwen;
+  }
+
+  function setTimer(timer) {
+    var resultMS = +getDistanceMS();
+    var seconds = Math.floor(resultMS / 1000 % 60),
+        minutes = Math.floor(resultMS / 1000 / 60 % 60),
+        hours = Math.floor(resultMS / (1000 * 60 * 60) % 24),
+        days = Math.floor(resultMS / (1000 * 60 * 60 * 24));
+    timer.innerHTML = "\n        <p><h4>\u0414\u041E \u0417\u0410\u0412\u0415\u0420\u0428\u0415\u041D\u0418\u042F \u0410\u041A\u0426\u0418\u0418:</h4></p>\n        <div class=\"container1\">\n            <div class=\"numbers1\"><div><span id=\"days\">".concat(days < 10 ? '0' + days : days, "</span></div><div class=\"description1\">\u0414\u043D\u0435\u0439</div></div>\n            <div class=\"numbers1\"><div><span id=\"hours\">").concat(hours < 10 ? '0' + hours : hours, "</span></div><div class=\"description1\">\u0427\u0430\u0441\u043E\u0432</div></div>\n            <div class=\"numbers1\"><div><span id=\"minutes\">").concat(minutes < 10 ? '0' + minutes : minutes, "</span></div><div class=\"description1\">\u041C\u0438\u043D\u0443\u0442</div></div>\n            <div class=\"numbers1\"><div><span id=\"seconds\">").concat(seconds < 10 ? '0' + seconds : seconds, "</span></div><div class=\"description1\">\u0421\u0435\u043A\u0443\u043D\u0434</div></div>      \n        </div>\n        ");
+
+    if (+resultMS < 1000) {
+      clearInterval(updateTime);
+      timer.innerHTML = "\n        <p><h4>\u0414\u041E \u0417\u0410\u0412\u0415\u0420\u0428\u0415\u041D\u0418\u042F \u0410\u041A\u0426\u0418\u0418:</h4></p>\n        <div class=\"container1\">\n            <div class=\"numbers1\"><div><span id=\"days\">00</span></div><div class=\"description1\">\u0414\u043D\u0435\u0439</div></div>\n            <div class=\"numbers1\"><div><span id=\"hours\">00</span></div><div class=\"description1\">\u0427\u0430\u0441\u043E\u0432</div></div>\n            <div class=\"numbers1\"><div><span id=\"minutes\">00</span></div><div class=\"description1\">\u041C\u0438\u043D\u0443\u0442</div></div>\n            <div class=\"numbers1\"><div><span id=\"seconds\">00</span></div><div class=\"description1\">\u0421\u0435\u043A\u0443\u043D\u0434</div></div>      \n        </div>\n        ";
+    }
+  } //setTimer
+
+
+  var updateTime = setInterval(function () {
+    setTimer(timerItems);
+  }, 1000);
+} //timer
+
+/***/ }),
+
 /***/ "./src/js/service/service.js":
 /*!***********************************!*\
   !*** ./src/js/service/service.js ***!
@@ -18950,6 +19063,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var core_js_modules_es_promise__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(core_js_modules_es_promise__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var regenerator_runtime_runtime__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! regenerator-runtime/runtime */ "./node_modules/regenerator-runtime/runtime.js");
 /* harmony import */ var regenerator_runtime_runtime__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(regenerator_runtime_runtime__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _modules_modal__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../modules/modal */ "./src/js/modules/modal.js");
+
 
 
 
@@ -18988,10 +19103,12 @@ var postDataFormToServer = function postDataFormToServer(url, targetBody, messag
 };
 function closeModal(element) {
   document.body.style.overflow = "";
+  document.body.style.marginRight = "0px";
   element.style.display = "none";
 }
 function openModal(element) {
   document.body.style.overflow = "hidden";
+  document.body.style.marginRight = "".concat(Object(_modules_modal__WEBPACK_IMPORTED_MODULE_3__["calcScroll"])(), "px");
   element.style.display = "block";
   element.classList.add("opened");
 }

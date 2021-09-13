@@ -2,6 +2,22 @@
 
 import {closeModal, openModal} from "../service/service";
 
+export function calcScroll() {
+    let div = document.createElement("div");
+
+    div.style.width = "50px";
+    div.style.height = "50px";
+    div.style.overflowY = "scroll";
+    div.style.visibility = "hidden";
+
+    document.body.appendChild(div);
+
+    let scrollWidth = div.offsetWidth - div.clientWidth;
+    document.body.removeChild(div);
+
+    return scrollWidth;
+}
+
 export function modalWindow({buttonOpenSelectorItem, modalSelectorItem, buttonCloseSelectorItem, timerNumber}) {
 
 const buttonsPopup = document.querySelectorAll(buttonOpenSelectorItem);
